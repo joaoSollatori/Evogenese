@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Evogenêse</title>
+    <style>
+        /* CSS mantido */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 0;
+        }
+
+        /* Fundo animado */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Container flutuante para o formulário */
+        .container {
+            background-color: #1e1e1e;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            max-width: 400px;
+            width: 100%;
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Título */
+        .container h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+            color: #ff4500;
+        }
+
+        /* Grupos do formulário */
+        .form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #f0f0f0;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        /* Campos */
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-control:focus {
+            outline: none;
+            background-color: #333;
+        }
+
+        /* Botões */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            background-color: #ff4500;
+            color: white;
+            box-shadow:
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+                0 4px 12px rgba(255, 69, 0, 0.4);
+        }
+
+        .btn:hover {
+            background-color: #e03e00;
+            box-shadow:
+                inset 0 -2px 6px rgba(0, 0, 0, 0.4),
+                0 6px 14px rgba(255, 69, 0, 0.4);
+        }
+
+        .links {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #cccccc;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Notificação de erro */
+        .notification-error {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4500;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 2px solid #b0b0b0; /* Borda cinza prata */
+            font-size: 16px;
+            text-align: center;
+            display: none;
+            z-index: 10;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Animação da notificação */
+        .notification-show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsivo */
+        @media (max-width: 400px) {
+            .container {
+                padding: 16px;
+            }
+
+            .container h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+ {% include 'partials/flash_messages.html' %}
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="notification-error notification-show" id="error-notification">
+                {% for category, message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <h2>volvUS v2.0</h2>
+
+        <!-- Formulário de login dentro do bloco flutuante -->
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            
+            <!-- Campo de E-mail -->
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                {{ form.email(class_="form-control", placeholder="Digite seu e-mail") }}
+            </div>
+
+            <!-- Campo de Senha -->
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                {{ form.senha(class_="form-control", placeholder="Digite sua senha") }}
+            </div>
+
+            <!-- Lembrar-me -->
+            <div class="form-group">
+                <label>{{ form.lembrar() }} Lembrar-me</label>
+            </div>
+
+            <!-- Botão de Submissão -->
+            <div class="form-group">
+                <button type="submit" class="btn">{{ form.submit.label }}</button>
+            </div>
+        </form>
+
+        <!-- Links de Esqueci a senha -->
+        <div class="links">
+            <a href="{{ url_for('esqueci_minha_senha') }}">Esqueci minha senha</a>
+        </div>
+    </div>
+
+    <!-- Partículas no fundo -->
+    <div id="particles-js"></div>
+
+    <!-- Lib e Configuração do Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Exibição da notificação
+        function showNotification() {
+            var notification = document.getElementById('error-notification');
+            notification.classList.add('notification-show');
+            setTimeout(function() {
+                notification.classList.remove('notification-show');
+            }, 3000); // 3 segundos
+        }
+
+        // Exemplo de erro. Exibir notificação
+        {% if messages %}
+            showNotification();
+        {% endif %}
+
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60 },
+                color: { value: "#ff4500" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 4, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ff4500",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.6
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.4 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>

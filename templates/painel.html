@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel Administrativo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212;
+      color: #ccc;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      color: #e64522;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    h1 {
+      font-size: 1rem;
+      margin: 0;
+      text-shadow: 0 0 5px rgba(230, 69, 34, 0.3);
+    }
+
+    .header-icons i {
+      margin-left: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      color: #aaa;
+    }
+
+    .header-icons i:hover {
+      color: #e64522;
+      transform: scale(1.2);
+    }
+
+    .main-container {
+      padding: 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .popup-boxes {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      animation: popup 0.5s ease-in-out;
+    }
+
+    .popup {
+      background-color: #1e1e1e;
+      border-left: 4px solid #e64522;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(230, 69, 34, 0.2);
+      width: 100%;
+      max-width: 100%;
+      font-size: 0.9rem;
+      transition: transform 0.2s ease;
+    }
+
+    .popup:hover {
+      transform: scale(1.02);
+    }
+
+    .summary-card {
+      font-size: 0.95rem;
+      color: #eee;
+      margin: 0;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .admin-btn {
+      background-color: #1f1f1f;
+      border: 1px solid #e64522;
+      color: #e64522;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .admin-btn:hover {
+      background-color: #e64522;
+      color: #121212;
+      transform: scale(1.03);
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 160px;
+      background-color: #2a2a2a;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 0.4rem;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; 
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .splash-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #121212;
+      color: #e64522;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-size: 1.5rem;
+      animation: fadeOut 1.5s ease-out 2s forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes popup {
+      0% { transform: translateY(-50%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="splash-screen">
+    Carregando Evogenêse...
+    <div style="margin-top: 1rem;"><i class="fas fa-cog fa-spin fa-2x"></i></div>
+  </div>
+
+  <header>
+    <h1>Painel Administrativo</h1>
+    <div class="header-icons">
+      <i class="fas fa-bell tooltip"><span class="tooltiptext">Alertas</span></i>
+      <i class="fas fa-cog tooltip"><span class="tooltiptext">Configurações</span></i>
+      <i class="fas fa-plug tooltip"><span class="tooltiptext">Status API</span></i>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <div class="popup-boxes">
+      <div class="popup">
+        <p class="summary-card"><strong>Resumo:</strong> 4 online, 12 acessos, 3 contas criadas</p>
+      </div>
+      <div class="popup">
+        <p class="summary-card"><strong>Meta:</strong> 72% atingido, engajamento 81%</p>
+      </div>
+    </div>
+
+    <div class="button-grid">
+      <button class="admin-btn" id="btn-criar-usuario"><i class="fas fa-user-plus"></i> Criar Usuário</button>
+      <button class="admin-btn" id="btn-historico-rc"><i class="fas fa-database"></i> Histórico RC</button>
+      <button class="admin-btn" id="btn-configuracoes"><i class="fas fa-cogs"></i> Configurações</button>
+      <button class="admin-btn" id="btn-notificacoes"><i class="fas fa-bell"></i> Notificações</button>
+      <button class="admin-btn" id="btn-manutencao"><i class="fas fa-exclamation-triangle"></i> Modo Manutenção</button>
+      <button class="admin-btn" id="btn-rankings"><i class="fas fa-chart-bar"></i> Rankings</button>
+      <button class="admin-btn" id="btn-metas"><i class="fas fa-flag-checkered"></i> Metas</button>
+      <button class="admin-btn" id="btn-logs"><i class="fas fa-eye"></i> Logs</button>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Botões principais
+      document.querySelector("#btn-criar-usuario").addEventListener("click", function() {
+        window.location.href = "/admin/criar-usuario";
+      });
+
+      document.querySelector("#btn-historico-rc").addEventListener("click", function() {
+        window.location.href = "/admin/historico";
+      });
+
+      document.querySelector("#btn-configuracoes").addEventListener("click", function() {
+        window.location.href = "/admin/configuracoes";
+      });
+
+      document.querySelector("#btn-notificacoes").addEventListener("click", function() {
+        window.location.href = "/admin/notificacoes";
+      });
+
+      document.querySelector("#btn-manutencao").addEventListener("click", function() {
+        window.location.href = "/admin/modo-manutencao";
+      });
+
+      document.querySelector("#btn-rankings").addEventListener("click", function() {
+        window.location.href = "/admin/rankings";
+      });
+
+      document.querySelector("#btn-metas").addEventListener("click", function() {
+        window.location.href = "/admin/metas";
+      });
+
+      document.querySelector("#btn-logs").addEventListener("click", function() {
+        window.location.href = "/admin/logs";
+      });
+
+      // Header icons
+      document.querySelector(".fa-bell").addEventListener("click", function () {
+        window.location.href = "/admin/notificacoes";
+      });
+
+      document.querySelector(".fa-cog").addEventListener("click", function () {
+        window.location.href = "/admin/configuracoes";
+      });
+
+      document.querySelector(".fa-plug").addEventListener("click", function () {
+        window.location.href = "/admin/status-api";
+      });
+    });
+  </script>
+</body>
+</html>

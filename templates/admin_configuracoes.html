@@ -1,0 +1,26 @@
+<!-- templates/admin_configuracoes.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações do Sistema - Evogenêse</title>
+</head>
+<body>
+    <h1>Configurações do Sistema</h1>
+
+    <form method="POST" action="{{ url_for('admin.configuracoes') }}">
+        <label for="titulo">Título do Sistema:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ configuracoes.titulo }}"><br><br>
+
+        <label for="modo_manutencao">Modo Manutenção:</label>
+        <select name="modo_manutencao" id="modo_manutencao">
+            <option value="on" {% if configuracoes.modo_manutencao == 'on' %}selected{% endif %}>Ativado</option>
+            <option value="off" {% if configuracoes.modo_manutencao == 'off' %}selected{% endif %}>Desativado</option>
+        </select><br><br>
+
+        <input type="submit" value="Salvar Configurações">
+    </form>
+
+    <a href="{{ url_for('admin.painel_admin') }}">Voltar ao Painel</a>
+</body>
+</html>

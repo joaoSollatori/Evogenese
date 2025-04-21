@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado Estratégico</title>
+</head>
+<body>
+    <h1>Resultado da Simulação</h1>
+    <p><strong>Protocolo:</strong> {{ nome_protocolo }}</p>
+    <p><strong>Dias Estimados:</strong> {{ dias_estimados }}</p>
+    <p><strong>Criticidade:</strong> {{ criticidade }}</p>
+    <p><strong>Valor Total:</strong> R$ {{ valor_total }}</p>
+
+    <br>
+    <a href="{{ url_for('calculadora') }}">Nova Simulação</a> |
+    <a href="{{ url_for('logout') }}">Sair</a>
+</body>
+</html>

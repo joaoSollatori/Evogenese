@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificações</title>
+</head>
+<body>
+    <h1>Notificações do Sistema</h1>
+
+    {% if notificacoes %}
+        <ul>
+            {% for n in notificacoes %}
+                <li><strong>{{ n[1] }}</strong> - {{ n[2] }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma notificação disponível.</p>
+    {% endif %}
+
+    <a href="{{ url_for('admin.painel_admin') }}">Voltar ao Painel</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!-- templates/partials/flash_messages.html -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div id="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }} animate__animated animate__fadeInDown">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      setTimeout(() => {
+        document.querySelectorAll('.flash').forEach(el => {
+          el.classList.add('animate__fadeOutUp');
+          setTimeout(() => el.remove(), 1000); // remove após animação
+        });
+      }, 4000); // 4 segundos visível
+    </script>
+  {% endif %}
+{% endwith %}
+
+<style>
+  #flash-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    width: auto;
+  }
+  .flash {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  .flash-success { background-color: #38a169; }
+  .flash-danger { background-color: #e53e3e; }
+  .flash-warning { background-color: #dd6b20; }
+  .flash-info    { background-color: #3182ce; }
+</style>

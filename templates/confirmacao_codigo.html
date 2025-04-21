@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação de Código</title>
+    <style>
+        .flash-success {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .flash-error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .mensagem-evogenetica {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Confirmação de Código</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li class="flash-{{ category }}">
+            <div class="mensagem-evogenetica">
+              {% if category == 'success' %}
+                Boaaa, conseguimos verificar que você é um Evo genuíno! A jornada continua!
+              {% elif category == 'error' %}
+                Xiii... Sei não, ein fi do Bill! Deu ruim aqui. Gere um novo código ou reinicie o ritual.
+              {% else %}
+                {{ message }}
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <label for="codigo">Digite o código que você recebeu:</label><br>
+        <input type="text" name="codigo" required><br><br>
+        <button type="submit">Verificar</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Modo Manutenção</title>
+</head>
+<body>
+    <h1>Modo Manutenção</h1>
+
+    <form method="POST">
+        <label for="status">Ativar Modo Manutenção?</label>
+        <select name="status" id="status">
+            <option value="on">Sim</option>
+            <option value="off">Não</option>
+        </select>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <a href="{{ url_for('admin.painel_admin') }}">Voltar ao Painel</a>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Usuário – Painel Admin</title>
+    <style>
+        :root {
+            --cor-fundo: #121212;
+            --cor-bloco: #1e1e1e;
+            --cor-texto: #f5f5f5;
+            --cor-destaque: #ff5722;
+            --cor-destaque-hover: #e64a19;
+            --cor-borda: #333;
+            --cor-input: #2b2b2b;
+            --cor-success: #2fd27a;
+            --cor-error: #ff6b6b;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: flex-start; /* Alinha tudo ao topo */
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Centraliza no eixo horizontal */
+            background-color: var(--cor-bloco);
+            padding: 60px 80px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 1100px; /* Aumentado para um bloco maior */
+            box-sizing: border-box;
+        }
+
+        h2 {
+            color: var(--cor-destaque);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #cccccc;
+            font-size: 1.1em; /* Aumenta o tamanho da fonte dos labels */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 18px; /* Aumenta o padding dos campos */
+            margin-bottom: 25px;
+            background-color: var(--cor-input);
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            color: var(--cor-texto);
+            font-size: 1.2em; /* Aumenta o tamanho da fonte nos campos */
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--cor-destaque);
+            background-color: #303030;
+        }
+
+        button,
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--cor-destaque);
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover,
+        input[type="submit"]:hover {
+            background-color: var(--cor-destaque-hover);
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #1a3e2a;
+            color: var(--cor-success);
+        }
+
+        .error {
+            background-color: #3e1a1a;
+            color: var(--cor-error);
+        }
+
+        @media (max-width: 1280px) {
+            body {
+                padding: 120px 100px;
+            }
+
+            .container {
+                max-width: 90%;
+                padding: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 80px 40px;
+            }
+
+            .container {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 40px 20px;
+            }
+
+            .container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2>Criar Novo Usuário</h2>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info">
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST" action="{{ url_for('admin.criar_usuario') }}">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      {{ form.nome(class="form-control") }}
+    </div>
+    
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      {{ form.email(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      {{ form.telefone(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      {{ form.senha(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+      <label for="confirmar_senha">Confirmar Senha</label>
+      {{ form.confirmar_senha(class="form-control") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ form.submit }}</button>
+  </form>
+{% endblock %}
+    <div class="container">
+        <h2>Painel Administrativo – Cadastrar Novo Usuário</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message {{ 'success' if category == 'success' else 'error' }}">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('admin.criar_usuario') }}">
+            {{ form.hidden_tag() }}
+
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" value="{{ request.form.get('nome') }}" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ request.form.get('email') }}" required>
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" name="telefone" value="{{ request.form.get('telefone') }}" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" value="{{ request.form.get('senha') }}" required>
+
+            <label for="confirmar_senha">Confirmar Senha:</label>
+            <input type="password" name="confirmar_senha" value="{{ request.form.get('confirmar_senha') }}" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>

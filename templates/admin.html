@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+</head>
+<body>
+    <h1>Bem-vindo, {{ session['usuario_nome'] }}!</h1>
+    <h2>Painel Administrativo</h2>
+    
+    <!-- Links para as funcionalidades administrativas -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin.painel_admin') }}">Painel</a></li>
+            <li><a href="{{ url_for('admin.criar_usuario') }}">Criar Novo Usuário</a></li>
+            <li><a href="{{ url_for('admin.exibir_logs') }}">Logs</a></li>
+            <li><a href="{{ url_for('admin.historico_calculos') }}">Histórico de Cálculos</a></li>
+            <li><a href="{{ url_for('admin.estatisticas') }}">Estatísticas</a></li>
+            <li><a href="{{ url_for('admin.notificacoes') }}">Notificações</a></li>
+            <li><a href="{{ url_for('admin.modo_manutencao') }}">Modo Manutenção</a></li>
+            <li><a href="{{ url_for('admin.configuracoes') }}">Configurações</a></li>
+            <li><a href="{{ url_for('admin.rankings') }}">Rankings</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Formulário de criação de usuário -->
+    <h3>Criar Novo Usuário</h3>
+    <form method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required><br>
+        
+        <button type="submit" name="criar">Criar Usuário</button>
+    </form>
+    
+    <!-- Lista de usuários com opção de exclusão -->
+    <h3>Usuários Existentes</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario[0] }}</td>
+            <td>{{ usuario[1] }}</td>
+            <td>{{ usuario[2] }}</td>
+            <td>
+                <!-- Formulário para excluir usuário -->
+                <form method="POST" style="display:inline;">
+                    <input type="hidden" name="id_usuario" value="{{ usuario[0] }}">
+                    <button type="submit" name="excluir">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <a href="{{ url_for('logout') }}">Sair</a>
+</body>
+</html>

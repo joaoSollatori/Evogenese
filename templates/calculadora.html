@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora - Evogenêse</title>
+    <style>
+        /* Incluir os estilos do login e do toast aqui (conforme mostrado no login.html) */
+    </style>
+</head>
+<body>
+
+    <!-- Flash messages -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Seu conteúdo da calculadora -->
+    <div class="container">
+        <h2>Calculadora Evogenética</h2>
+        <!-- Outros elementos da calculadora -->
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const messages = {{ get_flashed_messages(with_categories=true)|tojson }};
+            const container = document.getElementById("toast-container");
+
+            messages.forEach(([category, message]) => {
+                const toast = document.createElement("div");
+                toast.classList.add("toast");
+
+                if (category === "success") {
+                    toast.style.backgroundColor = "#2e8b57";  // Verde escuro
+                } else if (category === "error") {
+                    toast.style.backgroundColor = "#8b0000";  // Vermelho escuro
+                }
+
+                toast.innerText = message;
+                container.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 5500);
+            });
+        });
+    </script>
+
+</body>
+</html>

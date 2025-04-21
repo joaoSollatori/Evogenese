@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico de Cálculos</title>
+</head>
+<body>
+    <h1>Histórico de Cálculos Realizados</h1>
+
+    {% if historico %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in historico %}
+                    <tr>
+                        <td>{{ h[0] }}</td>
+                        <td>{{ h[1] }}</td>
+                        <td>{{ h[2] }}</td>
+                        <td>{{ h[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Não há registros de cálculos ainda.</p>
+    {% endif %}
+
+    <a href="{{ url_for('admin.painel_admin') }}">Voltar ao Painel</a>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!-- templates/estatisticas.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Estatísticas do Sistema</title>
+</head>
+<body>
+    <h1>Estatísticas Gerais</h1>
+    <p>Total de Usuários: {{ total_usuarios }}</p>
+    <p>Total de Cálculos Realizados: {{ total_calculos }}</p>
+
+    <a href="{{ url_for('admin.painel_admin') }}">Voltar ao Painel</a>
+</body>
+</html>
